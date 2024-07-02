@@ -1,3 +1,5 @@
+"use client"
+
 import { useEmitter } from "@/components/EventEmitter";
 import lodash from "lodash";
 import {

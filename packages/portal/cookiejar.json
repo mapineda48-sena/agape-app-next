@@ -1,0 +1,27 @@
+{
+  "version": "tough-cookie@4.1.4",
+  "storeType": "MemoryCookieStore",
+  "rejectPublicSuffixes": true,
+  "enableLooseMode": false,
+  "allowSpecialUseDomain": true,
+  "prefixSecurity": "silent",
+  "cookies": [
+    {
+      "key": "auth_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTcxOTg3MzA1MiwiZXhwIjoxODA2MjczMDUyfQ.NtmbqCRs_fasSZLddxf-eB6BtBDBoOkJC6VEY5fggOA",
+      "expires": "2024-07-02T22:30:52.000Z",
+      "maxAge": 86400,
+      "domain": "localhost",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true,
+      "extensions": [
+        "Priority=High"
+      ],
+      "hostOnly": true,
+      "creation": "2024-07-01T21:52:35.937Z",
+      "lastAccessed": "2024-07-01T22:30:52.187Z",
+      "sameSite": "strict"
+    }
+  ]
+}

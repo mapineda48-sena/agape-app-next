@@ -1,8 +1,13 @@
+// Función para mantener las dependencias de node_modules como externas
+import fs from "fs-extra";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     if (!dev && isServer) {
       config.externals = [nodeExternals, ...config.externals];
+    } else {
+      config.externals = [nodeExternalsDev, ...config.externals];
     }
     // Important: return the modified config
     return config;
@@ -11,10 +16,16 @@ const nextConfig = {
 
 export default nextConfig;
 
-// Función para mantener las dependencias de node_modules como externas
-
-function nodeExternals({ context, request }, callback) {
+function nodeExternals({ request }, callback) {
   if (request.startsWith("backend")) {
+    return callback(null, "commonjs " + request);
+  }
+
+  callback();
+}
+
+function nodeExternalsDev({ request }, callback) {
+  if (request.startsWith("fs-extra")) {
     return callback(null, "commonjs " + request);
   }
 

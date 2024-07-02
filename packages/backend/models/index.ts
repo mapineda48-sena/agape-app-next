@@ -1,4 +1,4 @@
-import { QueryTypes, Sequelize, Transaction } from "sequelize";
+import { Sequelize, Transaction } from "sequelize";
 import cls from "cls-hooked";
 import _ from "lodash";
 import * as inventory from "./inventory";

@@ -1,10 +1,5 @@
-import Products from "./Products";
-
-export default async function Hello() {
-
-  return (
-    <>
-      <Products />
-    </>
-  );
+import Link from 'next/link'
+ 
+export default function Page() {
+  return <Link href="/login">Dashboard</Link>
 }

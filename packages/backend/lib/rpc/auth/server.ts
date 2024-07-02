@@ -6,10 +6,10 @@ import express, {
 } from "express";
 import parseFormData from "../form/server";
 import Jwt from "../../jwt";
+import webSession from "../../webSession";
 
 const AuthTokenCookie = "auth_token";
-
-const UserAgape = "__user_agape__";
+const AgapeNamespace = "__user_agape__";
 
 export const pattern = {
   login: "/service/auth/login",
@@ -30,7 +30,12 @@ export default function defineAuth(secret: string) {
   };
 
   router.post(pattern.login, async (req, res) => {
-    const [{ username, password }] = (await parseFormData(req)) as [{ username: string, password: string }];
+    const data = (await parseFormData(req)) as [
+      { username: string; password: string }
+    ];
+    console.log(data);
+
+    const [{ username, password }] = data;
 
     const isAdmin = username === "admin";
     const isPassword = password === "admin";
@@ -43,7 +48,7 @@ export default function defineAuth(secret: string) {
     // Aquí deberías validar las credenciales del usuario
     const user = { id: 1, username }; // Ejemplo de usuario
 
-    const token = await jwt.generateToken({ id: user.id });
+    const token = await jwt.generateToken(user);
 
     res.cookie(AuthTokenCookie, token, cookieOptions); // Establecer la cookie
     res.status(200).json(success({ message: "Login exitoso" }));
@@ -67,7 +72,8 @@ export default function defineAuth(secret: string) {
 
       res.cookie(AuthTokenCookie, token, cookieOptions); // Establecer la cookie
 
-      res.json(success(true));
+      console.log(payload);
+      res.json(success(payload));
     } catch (error) {
       res.clearCookie(AuthTokenCookie);
 
@@ -95,6 +101,7 @@ export default function defineAuth(secret: string) {
     try {
       const verified = await jwt.verifyToken(token);
       setUserRequest(req, verified);
+      webSession.setUser(verified);
 
       next();
     } catch (error) {
@@ -106,7 +113,7 @@ export default function defineAuth(secret: string) {
 }
 
 function setUserRequest(req: Request, payload: unknown) {
-  Object.defineProperty(req, UserAgape, {
+  Object.defineProperty(req, AgapeNamespace, {
     value: payload,
     writable: false,
     configurable: false,
@@ -115,8 +122,8 @@ function setUserRequest(req: Request, payload: unknown) {
 }
 
 export function getUserRequest(req: Request) {
-  if (UserAgape in req) {
-    return req[UserAgape];
+  if (AgapeNamespace in req) {
+    return req[AgapeNamespace];
   }
 }
 
@@ -130,7 +137,8 @@ export function getCookie(header?: string) {
   return token;
 }
 
-
 function success(payload: unknown) {
-  return [payload, []]
+  return [payload, []];
 }
+
+export const user = webSession;

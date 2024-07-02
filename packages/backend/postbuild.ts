@@ -24,7 +24,7 @@ fs.outputJSONSync(
   { spaces: 2 }
 );
 
-fs.outputFileSync("dist/service/auth.js", "");
+fs.outputFileSync("dist/service/auth.js", 'module.exports = require("../lib/rpc/auth/server");');
 
 fs.copySync("../portal/.next", "dist/.next", { overwrite: true });
 fs.copySync("../portal/public", "dist/public", { overwrite: true });

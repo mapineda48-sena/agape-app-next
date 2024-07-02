@@ -59,7 +59,7 @@ const placeholder = `
 
   await fs.outputFile(
     "service/auth.js",
-    'module.exports = require("../lib/rpc/auth/browser")uth";'
+    'module.exports = require("../lib/rpc/auth/browser");'
   );
 })().catch((error) => {
   throw error;
