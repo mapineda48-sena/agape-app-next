@@ -1,5 +1,6 @@
 {
   "fieldNameArgs": "$",
   "ApiKey": "AgapeApp",
-  "ApiKeyHeader": "x-api-key"
+  "ApiKeyHeader": "x-api-key",
+  "ApiSecretToken": "x-api-secret"
 }
